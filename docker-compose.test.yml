@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  sut:
+    build: 
+      context: .
+      dockerfile: dockerfile.integration
+    command: "java -jar karate.jar src"
+    depends_on:
+      - web
+
+  web:
+    build: 
+      context: .
+      dockerfile: dockerfile.api
+    ports: 
+      - 5000:80

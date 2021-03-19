@@ -1,0 +1,5 @@
+FROM openjdk:8-jre-alpine3.9
+RUN apk update && apk add curl
+COPY /integrationtests /tests/
+RUN curl -L https://github.com/intuit/karate/releases/download/v0.9.6/karate-0.9.6.jar --output /tests/karate.jar
+WORKDIR /tests

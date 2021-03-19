@@ -1,0 +1,7 @@
+.git/**
+**/.vscode/**
+**/bin/**
+**/obj/**
+integrationtests/target/**
+integrationtests/karate.jar
+Dockerfile

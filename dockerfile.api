@@ -1,0 +1,15 @@
+FROM mcr.microsoft.com/dotnet/sdk:5.0 as build
+COPY ./api/*.csproj /input/api/
+COPY ./unittests/*.csproj /input/unittests/
+WORKDIR /input
+RUN dotnet restore ./api/api.csproj
+RUN dotnet restore ./unittests/unittests.csproj
+COPY ./ /input
+RUN dotnet build ./api/api.csproj -c Release
+RUN dotnet test ./unittests
+RUN dotnet publish -c Release ./api/api.csproj -o /output
+
+FROM mcr.microsoft.com/dotnet/aspnet:5.0 as runtime
+COPY --from=build /output .
+EXPOSE 80
+ENTRYPOINT ["dotnet", "api.dll"]
